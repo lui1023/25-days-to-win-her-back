@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>25-Day Interactive Calendar</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fff0f5;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .day {
+      background: #ffe4e1;
+      padding: 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s, background-color 0.5s;
+    }
+
+    .day:hover {
+      transform: scale(1.05);
+    }
+
+    .day.past {
+      background: #e6a8a1 !important;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 100;
+      border: 2px solid #f08080;
+    }
+
+    .overlay img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .overlay .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .overlay .close-btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: #f08080;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .overlay .close-btn:hover {
+      background: #dc143c;
+    }
+
+    .backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
+    .graduation-label {
+      font-size: 0.5rem;
+      color: #ff1493;
+      font-weight: bold;
+      animation: growLabel 1.5s ease-in-out forwards;
+      margin-top: 10px;
+    }
+
+    @keyframes growLabel {
+      0% { font-size: 0.5rem; opacity: 0; }
+      50% { font-size: 1.5rem; opacity: 0.6; }
+      100% { font-size: 2rem; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>25 Days of Growth 🌱</h1>
+  <div class="calendar" id="calendarContainer">
+    <!-- Calendar days -->
+    <script>
+      const startDate = new Date("2025-04-14");
+      const today = new Date();
+      const timeDiff = today - startDate;
+      const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+      for (let i = 1; i <= 25; i++) {
+        const isPast = i <= dayDiff + 1 ? 'past' : '';
+        if (i === 25) {
+          document.write(`<div class="day ${isPast}" onclick="openOverlay(${i})">${i}<div class="graduation-label">Graduation Day 🎓</div></div>`);
+        } else {
+          document.write(`<div class="day ${isPast}" onclick="openOverlay(${i})">${i}</div>`);
+        }
+      }
+    </script>
+  </div>
+
+  <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
+
+  <script>
+    for (let i = 1; i <= 25; i++) {
+      let extra = (i === 25) ? '<div class="graduation-label">Graduation Day 🎓</div>' : '';
+      document.write(`
+        <div class="overlay" id="overlay${i}">
+          <div class="content">
+            <img src="cutecat1.jpg" alt="Day ${i} image">
+            <p>Day ${i}: Write something meaningful here.</p>
+            ${extra}
+            <button class="close-btn" onclick="closeOverlay()">Close</button>
+          </div>
+        </div>
+      `);
+    }
+  </script>
+
+  <script>
+    function openOverlay(day) {
+      document.getElementById("overlay" + day).style.display = "block";
+      document.getElementById("backdrop").style.display = "block";
+    }
+
+    function closeOverlay() {
+      document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+      document.getElementById("backdrop").style.display = "none";
+    }
+  </script>
+</body>
+</html>

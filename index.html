@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Te Amo</title>
-
   <link rel="stylesheet" href="./style.css" />
   <style>
+    body {
+      background-color: #d9a6a6;
+      font-family: sans-serif;
+      padding: 20px 40px;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+    }
+
     p {
       font-size: 18px;
       margin-bottom: 10px;
@@ -32,31 +44,148 @@
       line-height: 1.6;
     }
 
-.goal-list input[type="checkbox"] {
-  margin-top: 4px;
-}
+    .goal-list input[type="checkbox"] {
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      position: sticky;
+      bottom: 20px;
+      background-color: #d9a6a6;
+      padding: 10px 0;
+    }
+
+    .btn a {
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      padding: 10px 25px;
+      border-radius: 66px;
+      box-shadow: 0.5rem 1rem 3rem hsl(0, 0%, 0%, 0.3);
+    }
+
+    .mini-calendar {
+      position: fixed;
+      top: 50%;
+      right: 100px;
+      transform: translateY(-50%);
+      width: 320px;
+      background-color: #ffe4e1;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .mini-calendar::before {
+      content: "The calendar contains a note within each day that goes by :)";
+      display: block;
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .calendar-mini {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .calendar-mini .mini-day {
+      background: #f8cfcf;
+      border-radius: 6px;
+      font-size: 18px;
+      padding: 12px 0;
+      font-weight: bold;
+      transition: background-color 0.4s;
+      cursor: default;
+    }
+
+    .calendar-mini .mini-day.past {
+      background: #e6a8a1;
+      cursor: pointer;
+    }
+
+    .calendar-mini .mini-day.future {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 100;
+      border: 2px solid #f08080;
+    }
+
+    .overlay img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .overlay .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .overlay .close-btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: #f08080;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .overlay .close-btn:hover {
+      background: #dc143c;
+    }
+
+    .backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+    }
   </style>
 </head>
-
 <body>
   <div class="container">
-    <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918"
-      data-width="100%">
+    <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918" data-width="100%">
       <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">:v</a> from
       <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
     </div>
-
     <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
     <h1>I'm Sorry.</h1>
     <div class="main-text">
-      <p>
-        I know I can be a bit much sometimes, but I promise I'm working on it. I just want to be the best version of myself for me, myself, and you.
-      </p>
+      <p>I know I can be a bit much sometimes, but I promise I'm working on it. I just want to be the best version of myself for me, myself, and you.</p>
     </div>
-        
-    <h5>Road to becoming a better man:</h5>
-    <p> The boxes get checked as they're completed</p>
+
+    <h5>My journey to becoming a loving man.</h5>
+    <p>The boxes get checked as they're completed.</p>
 
     <div class="goal-list">
       <label><input type="checkbox" id="goal1"> Complete all my overdue homework.</label>
@@ -69,32 +198,96 @@
       <label><input type="checkbox" id="goal8"> Create a playlist that reflects how I want to feel in the future.</label>
       <label><input type="checkbox" id="goal9"> Take the perfect photo of life.</label>
       <label><input type="checkbox" id="goal10"> Release my freeze tag game.</label>
-      <label><input type="checkbox" id="goal11"> Be happy.</label>
+      <label><input type="checkbox" id="goal11"> Drink black coffee.</label>
+      <label><input type="checkbox" id="goal12"> Be happy.</label>
     </div>
-    
-    <p> Are you interested in what I have to show you? </p>
-    <h5> dont say no 😊</h5>
+
+    <p>Are you interested in what I have to show you?</p>
+    <h5>don't say no 😊</h5>
 
     <div class="btn">
       <a href="yes.html">Yes</a>
       <a href="no1.html">No</a>
     </div>
-  </div>
 
-  <script>
-    const totalGoals = 10;
-    for (let i = 1; i <= totalGoals; i++) {
-      const checkbox = document.getElementById(`goal${i}`);
-      const savedState = localStorage.getItem(`goal${i}`);
-      if (savedState === 'true') {
-        checkbox.checked = true;
+    <!-- MINI CALENDAR -->
+    <div class="mini-calendar">
+      <h4>📅 Progress Tracker</h4>
+      <div class="calendar-mini" id="calendarMini"></div>
+    </div>
+
+    <!-- OVERLAYS -->
+    <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
+
+    <script>
+      const dayMessages = [
+        "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ];
+
+      for (let i = 1; i <= 25; i++) {
+        const message = dayMessages[i - 1] || `Day ${i}: yuh`;
+        document.body.insertAdjacentHTML('beforeend', `
+          <div class="overlay" id="overlay${i}">
+            <div class="content">
+              <img src="cutecat1.jpg" alt="Day ${i} image">
+              <p>Day ${i}: ${message}</p>
+              <button class="close-btn" onclick="closeOverlay()">Close</button>
+            </div>
+          </div>
+        `);
       }
 
-      checkbox.addEventListener('change', () => {
-        localStorage.setItem(`goal${i}`, checkbox.checked);
-      });
-    }
-  </script>
-</body>
+      const miniStartDate = new Date("2025-04-14");
+      const miniToday = new Date();
+      const miniDiff = Math.floor((miniToday - miniStartDate) / (1000 * 60 * 60 * 24));
+      const miniCalendar = document.getElementById("calendarMini");
 
+      for (let i = 1; i <= 25; i++) {
+        const dayBox = document.createElement("div");
+        if (i <= miniDiff + 1) {
+          dayBox.className = "mini-day past";
+          dayBox.onclick = () => openOverlay(i);
+        } else {
+          dayBox.className = "mini-day future";
+        }
+        dayBox.textContent = i;
+        miniCalendar.appendChild(dayBox);
+      }
+
+      function openOverlay(day) {
+        document.getElementById("overlay" + day).style.display = "block";
+        document.getElementById("backdrop").style.display = "block";
+      }
+
+      function closeOverlay() {
+        document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+        document.getElementById("backdrop").style.display = "none";
+      }
+    </script>
+  </div>
+</body>
 </html>
