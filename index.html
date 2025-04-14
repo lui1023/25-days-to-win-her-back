@@ -68,6 +68,15 @@
       box-shadow: 0.5rem 1rem 3rem hsl(0, 0%, 0%, 0.3);
     }
 
+    .calendar-toggle-btn {
+      position: absolute;
+      top: 10px;
+      right: 60px;
+      cursor: pointer;
+      width: 60px;
+    }
+
+
     .mini-calendar {
       position: fixed;
       top: 50%;
@@ -78,6 +87,7 @@
       border-radius: 10px;
       padding: 25px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      display: none;
     }
 
     .mini-calendar::before {
@@ -114,6 +124,17 @@
     .calendar-mini .mini-day.future {
       opacity: 0.5;
       cursor: not-allowed;
+    }
+
+    .calendar-close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      background: none;
+      border: none;
+      font-size: 16px;
     }
 
     .overlay {
@@ -173,6 +194,8 @@
 </head>
 <body>
   <div class="container">
+    <div class="container">
+      <img class="calendar-toggle-btn" src="calendar.png" alt="Toggle Calendar" onclick="toggleCalendar()" />
     <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918" data-width="100%">
       <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">:v</a> from
       <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
@@ -287,6 +310,16 @@
         document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
         document.getElementById("backdrop").style.display = "none";
       }
+
+      function toggleCalendar() {
+        const calendar = document.querySelector('.mini-calendar');
+        if (calendar.style.display === 'none' || calendar.style.display === '') {
+          calendar.style.display = 'block';
+        } else {
+          calendar.style.display = 'none';
+        }
+      }
+
     </script>
   </div>
 </body>
