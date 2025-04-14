@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposed Her</title>
+
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .goal-list {
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    .goal-list label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .main-text {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+
+.goal-list input[type="checkbox"] {
+  margin-top: 4px;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918"
+      data-width="100%">
+      <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">Manja Sticker</a> from
+      <a href="https://tenor.com/search/snow-bengal-cat-gifs">Manja Stickers</a>
+    </div>
+
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+    <h1>I'm Sorry.</h1>
+    <div class="main-text">
+      <p>
+        I know I can be a bit much sometimes, but I promise I'm working on it. I just want to be the best version of myself for me, myself, and you.
+      </p>
+    </div>
+        
+    <h5>Road to becoming a better man:</h5>
+    <p> The boxes get checked as they're completed</p>
+
+    <div class="goal-list">
+      <label><input type="checkbox" id="goal1"> Complete all my overdue homework.</label>
+      <label><input type="checkbox" id="goal2"> Complete 50 Push-ups in a set.</label>
+      <label><input type="checkbox" id="goal3"> Make some bomb ass chilaquiles.</label>
+      <label><input type="checkbox" id="goal4"> Finish a Harry Potter book so I can understand my own lore.</label>
+      <label><input type="checkbox" id="goal5"> Run a 6-7 minute mile.</label>
+      <label><input type="checkbox" id="goal6"> Secure a decent job. (hopefully with great benefits)</label>
+      <label><input type="checkbox" id="goal7"> Volunteer at my local animal shelter.</label>
+      <label><input type="checkbox" id="goal8"> Create a playlist that reflects how I want to feel in the future.</label>
+      <label><input type="checkbox" id="goal9"> Take the perfect photo of life.</label>
+      <label><input type="checkbox" id="goal10"> Release my freeze tag game.</label>
+      <label><input type="checkbox" id="goal11"> Be happy.</label>
+    </div>
+    
+    <p> Would you like to see my progress in life? </p>
+    <h5> dont say no 😊</h5>
+
+    <div class="btn">
+      <a href="yes.html">Yes</a>
+      <a href="no1.html">No</a>
+    </div>
+  </div>
+
+  <script>
+    const totalGoals = 10;
+    for (let i = 1; i <= totalGoals; i++) {
+      const checkbox = document.getElementById(`goal${i}`);
+      const savedState = localStorage.getItem(`goal${i}`);
+      if (savedState === 'true') {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(`goal${i}`, checkbox.checked);
+      });
+    }
+  </script>
+</body>
+
+</html>
