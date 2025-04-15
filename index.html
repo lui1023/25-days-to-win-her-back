@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Te Amo</title>
   <link rel="stylesheet" href="./style.css" />
   <style>
@@ -71,11 +71,10 @@
     .calendar-toggle-btn {
       position: absolute;
       top: 10px;
-      right: 60px;
+      left: 5%;
       cursor: pointer;
       width: 60px;
     }
-
 
     .mini-calendar {
       position: fixed;
@@ -196,131 +195,125 @@
   <div class="container">
     <div class="container">
       <img class="calendar-toggle-btn" src="calendar.png" alt="Toggle Calendar" onclick="toggleCalendar()" />
-    <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918" data-width="100%">
-      <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">:v</a> from
-      <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
-    </div>
-    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+      <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918" data-width="100%">
+        <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">:v</a> from
+        <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
+      </div>
+      <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
-    <h1>I'm Sorry.</h1>
-    <div class="main-text">
-      <p>I know I can be a bit much sometimes, but I promise I'm working on it. I just want to be the best version of myself for me, myself, and you.</p>
-    </div>
+      <h1>I'm Sorry.</h1>
+      <div class="main-text">
+        <p>I know I can be a bit much sometimes, but I promise I'm working on it. I just want to be the best version of myself for me, myself, and you.</p>
+      </div>
 
-    <h5>My journey to becoming a loving man.</h5>
-    <p>The boxes get checked as they're completed.</p>
+      <h5>My journey to becoming a loving man.</h5>
+      <p>The boxes get checked as they're completed.</p>
 
-    <div class="goal-list">
-      <label><input type="checkbox" id="goal1"> Complete all my overdue homework.</label>
-      <label><input type="checkbox" id="goal2"> Complete 50 Push-ups in a set.</label>
-      <label><input type="checkbox" id="goal3"> Make some bomb ass chilaquiles.</label>
-      <label><input type="checkbox" id="goal4"> Finish a Harry Potter book so I can understand my own lore.</label>
-      <label><input type="checkbox" id="goal5"> Run a 6-7 minute mile.</label>
-      <label><input type="checkbox" id="goal6"> Secure a decent job. (hopefully with great benefits)</label>
-      <label><input type="checkbox" id="goal7"> Volunteer at my local animal shelter.</label>
-      <label><input type="checkbox" id="goal8"> Create a playlist that reflects how I want to feel in the future.</label>
-      <label><input type="checkbox" id="goal9"> Take the perfect photo of life.</label>
-      <label><input type="checkbox" id="goal10"> Release my freeze tag game.</label>
-      <label><input type="checkbox" id="goal11"> Drink black coffee.</label>
-      <label><input type="checkbox" id="goal12"> Be happy.</label>
-    </div>
+      <div class="goal-list">
+        <label><input type="checkbox" id="goal1"> Complete all my overdue homework.</label>
+        <label><input type="checkbox" id="goal2"> Complete 50 Push-ups in a set.</label>
+        <label><input type="checkbox" id="goal3"> Make some bomb ass chilaquiles.</label>
+        <label><input type="checkbox" id="goal4"> Finish a Harry Potter book so I can understand my own lore.</label>
+        <label><input type="checkbox" id="goal5"> Run a 6-7 minute mile.</label>
+        <label><input type="checkbox" id="goal6"> Secure a decent job. (hopefully with great benefits)</label>
+        <label><input type="checkbox" id="goal7"> Volunteer at my local animal shelter.</label>
+        <label><input type="checkbox" id="goal8"> Create a playlist that reflects how I want to feel in the future.</label>
+        <label><input type="checkbox" id="goal9"> Take the perfect photo of life.</label>
+        <label><input type="checkbox" id="goal10"> Release my freeze tag game.</label>
+        <label><input type="checkbox" id="goal11"> Drink black coffee.</label>
+        <label><input type="checkbox" id="goal12"> Be happy.</label>
+      </div>
 
-    <p>Are you interested in what I have to show you?</p>
-    <h5>don't say no 😊</h5>
+      <p>Are you interested in what I have to show you?</p>
+      <h5>don't say no 😊</h5>
 
-    <div class="btn">
-      <a href="yes.html">Yes</a>
-      <a href="no1.html">No</a>
-    </div>
+      <div class="btn">
+        <a href="yes.html">Yes</a>
+        <a href="no1.html">No</a>
+      </div>
 
-    <!-- MINI CALENDAR -->
-    <div class="mini-calendar">
-      <h4>📅 Progress Tracker</h4>
-      <div class="calendar-mini" id="calendarMini"></div>
-    </div>
+      <!-- MINI CALENDAR -->
+      <div class="mini-calendar">
+        <h4>📅 Progress Tracker</h4>
+        <div class="calendar-mini" id="calendarMini"></div>
+      </div>
 
-    <!-- OVERLAYS -->
-    <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
+      <!-- OVERLAYS -->
+      <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
 
-    <script>
-      const dayMessages = [
-        "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ];
+      <script>
+        // MESSAGES (unchanged)
+        const dayMessages = [
+          "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
+          "", "", "", "", "",
+          "", "", "", "", "",
+          "", "", "", "", "",
+          "", "", "", "", "",
+          "", "", "", ""
+        ];
 
-      for (let i = 1; i <= 25; i++) {
-        const message = dayMessages[i - 1] || `Day ${i}: yuh`;
-        document.body.insertAdjacentHTML('beforeend', `
-          <div class="overlay" id="overlay${i}">
-            <div class="content">
-              <img src="cutecat1.jpg" alt="Day ${i} image">
-              <p>Day ${i}: ${message}</p>
-              <button class="close-btn" onclick="closeOverlay()">Close</button>
+        // CREATE OVERLAYS
+        for (let i = 1; i <= 25; i++) {
+          const message = dayMessages[i - 1] || `Day ${i}: yuh`;
+          document.body.insertAdjacentHTML('beforeend', `
+            <div class="overlay" id="overlay${i}">
+              <div class="content">
+                <img src="cutecat1.jpg" alt="Day ${i} image">
+                <p>Day ${i}: ${message}</p>
+                <button class="close-btn" onclick="closeOverlay()">Close</button>
+              </div>
             </div>
-          </div>
-        `);
-      }
-
-      const miniStartDate = new Date("2025-04-14");
-      const miniToday = new Date();
-      const miniDiff = Math.floor((miniToday - miniStartDate) / (1000 * 60 * 60 * 24));
-      const miniCalendar = document.getElementById("calendarMini");
-
-      for (let i = 1; i <= 25; i++) {
-        const dayBox = document.createElement("div");
-        if (i <= miniDiff + 1) {
-          dayBox.className = "mini-day past";
-          dayBox.onclick = () => openOverlay(i);
-        } else {
-          dayBox.className = "mini-day future";
+          `);
         }
-        dayBox.textContent = i;
-        miniCalendar.appendChild(dayBox);
-      }
 
-      function openOverlay(day) {
-        document.getElementById("overlay" + day).style.display = "block";
-        document.getElementById("backdrop").style.display = "block";
-      }
+        // EXACT 24-HOUR LOGIC
+        // Start at 2025-04-14 00:00:00
+        const miniStartDate = new Date("2025-04-14T00:00:00");
+        // Current local time
+        const now = new Date();
 
-      function closeOverlay() {
-        document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
-        document.getElementById("backdrop").style.display = "none";
-      }
+        // Full elapsed time in ms, not just date difference
+        const elapsedMs = now - miniStartDate;
+        // Divide by # of ms in 24 hours and add 1 => dayUnlocked
+        const dayUnlocked = Math.floor(elapsedMs / (1000 * 60 * 60 * 24)) + 1;
 
-      function toggleCalendar() {
-        const calendar = document.querySelector('.mini-calendar');
-        if (calendar.style.display === 'none' || calendar.style.display === '') {
-          calendar.style.display = 'block';
-        } else {
-          calendar.style.display = 'none';
+        const miniCalendar = document.getElementById("calendarMini");
+
+        // BUILD CALENDAR
+        for (let i = 1; i <= 25; i++) {
+          const dayBox = document.createElement("div");
+          if (i <= dayUnlocked) {
+            dayBox.className = "mini-day past";
+            dayBox.onclick = () => openOverlay(i);
+          } else {
+            dayBox.className = "mini-day future";
+          }
+          dayBox.textContent = i;
+          miniCalendar.appendChild(dayBox);
         }
-      }
 
-    </script>
+        // Overlays
+        function openOverlay(day) {
+          document.getElementById("overlay" + day).style.display = "block";
+          document.getElementById("backdrop").style.display = "block";
+        }
+
+        function closeOverlay() {
+          document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+          document.getElementById("backdrop").style.display = "none";
+        }
+
+        // Toggle mini-calendar
+        function toggleCalendar() {
+          const calendar = document.querySelector('.mini-calendar');
+          if (calendar.style.display === 'none' || calendar.style.display === '') {
+            calendar.style.display = 'block';
+          } else {
+            calendar.style.display = 'none';
+          }
+        }
+      </script>
+    </div>
   </div>
 </body>
 </html>
