@@ -247,6 +247,19 @@
     }
   </style>
 </head>
+
+<script>
+  fetch("https://01jrvypshttryp1dqhnzht7k8g.hooks.webhookrelay.com", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: "👋 Someone just visited your site!"
+    })
+  });
+  </script>
+
 <body>
   <div class="container">
     <div class="container">
