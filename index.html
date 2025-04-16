@@ -6,12 +6,26 @@
   <title>Te Amo</title>
   <link rel="stylesheet" href="./style.css" />
   <style>
+    /* ============================
+       1. Base styles
+    ============================ */
+    html, body {
+      margin: 0; /* just to ensure no unexpected margins */
+      padding: 0;
+    }
+
     body {
-      background-color: #d9a6a6;
+      background-color: #d9a6a6; /* you can remove if you want just the image */
       font-family: sans-serif;
       padding: 20px 40px;
       text-align: center;
-      overflow-x: hidden;
+      overflow-x: hidden; /* We'll also set this to hidden by default horizontally */
+    }
+
+    /* Lock scrolling when .no-scroll is on html or body */
+    html.no-scroll, body.no-scroll {
+      height: 100%;
+      overflow: hidden !important; /* fully disable scrolling */
     }
 
     .container {
@@ -68,7 +82,9 @@
       box-shadow: 0.5rem 1rem 3rem hsl(0, 0%, 0%, 0.3);
     }
 
-    /* CALENDAR ICON + MESSAGE */
+    /* ============================
+       2. Calendar Icon + LED Border
+    ============================ */
     .calendar-toggle-btn {
       position: absolute;
       top: 10px;
@@ -77,12 +93,10 @@
       width: 60px;
       z-index: 2;
       border: 3px solid transparent;
-      /* 1) We define an animation that cycles border colors (rainbow effect) */
       animation: rainbow-border 6s linear infinite;
-      border-radius: 8px; /* Slight rounding for LED-ish style (optional) */
+      border-radius: 8px;
     }
 
-    /* 2) Keyframes for the rainbow effect */
     @keyframes rainbow-border {
       0%   { border-color: red;     }
       16%  { border-color: orange;  }
@@ -93,18 +107,25 @@
       100% { border-color: violet;  }
     }
 
+    /* ============================
+       3. Calendar Icon Callout
+    ============================ */
     .calendar-callout {
       position: absolute;
       top: 10%;
       left: 5.3%;
       color: rgb(250, 138, 235);
-      font-size: 16px;
+      font-size: 14px;
       pointer-events: none;
       user-select: none;
       font-weight: bold;
       text-shadow: 1px 1px 3px #000;
+      text-align: left;
     }
 
+    /* ============================
+       4. Mini Calendar
+    ============================ */
     .mini-calendar {
       position: fixed;
       top: 50%;
@@ -116,7 +137,7 @@
       padding: 25px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       display: none;
-      z-index: 9999; /* So it's on top of the cat image on mobile */
+      z-index: 99; /* Over cat image */
     }
 
     .mini-calendar::before {
@@ -149,7 +170,6 @@
       background: #e6a8a1;
       cursor: pointer;
     }
-
     .calendar-mini .mini-day.future {
       opacity: 0.5;
       cursor: not-allowed;
@@ -166,6 +186,9 @@
       font-size: 16px;
     }
 
+    /* ============================
+       5. Overlays
+    ============================ */
     .overlay {
       display: none;
       position: fixed;
@@ -177,8 +200,12 @@
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      z-index: 100;
       border: 2px solid #f08080;
+      z-index: 100;
+
+      /* Let overlay scroll inside itself, not the body */
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .overlay img {
@@ -204,7 +231,6 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .overlay .close-btn:hover {
       background: #dc143c;
     }
@@ -226,9 +252,12 @@
     <div class="container">
       <!-- CALENDAR ICON -->
       <img class="calendar-toggle-btn" src="calendar.png" alt="Toggle Calendar" onclick="toggleCalendar()" />
-      <!-- RED ARROW / TEXT CALL-OUT -->
+
+      <!-- CALL-OUT TEXT -->
       <div class="calendar-callout">
-        ↑ Daily Updates! &nbsp;
+        ↑ Daily 
+        <br>
+        Updates! &nbsp;
       </div>
 
       <!-- MINI CALENDAR -->
@@ -243,10 +272,10 @@
       <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
 
       <script>
-        // MESSAGES (unchanged)
+        // MESSAGES
         const dayMessages = [
           "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
-          "Tuesdays... I had a run planned at 6 and I will try to make it..? I did have wingstop which I know is unhealthy but I'll cancel it out with the run hopefully, I stayed up till 6 in the morning finishing so much homework I'm so relieved, now it's just one class that's left till I'm caught up, we had our final presentation for one of the classes so that's nice, I started looking at jobs within my field, and it all sounds really easy I guess you could say..? Maybe my experience really did pay off at the very least lol but anyways, hopefully the rest of today is productive, no, it will be for sure, but I'll be uploading my hardwork later tonight hopefully, hope you have a really really good day :)... (UPDATE) I ran for 30 minutes, didn't know the trail yet so I didn't bother counting the mile but it's been 3 years and I didn't even vomit at the end of it, this challenge might actually be a.. anything is possible! moment, although the thought of you really gave me that extra boost I needed to keep going, I really do love you so much.", 
+          "Tuesdays... I had a run planned at 6 and I will try to make it..? I did have wingstop which I know is unhealthy but I'll cancel it out with the run hopefully, I stayed up till 6 in the morning finishing so much homework I'm so relieved, now it's just one class that's left till I'm caught up, we had our final presentation for one of the classes so that's nice, I started looking at jobs within my field, and it all sounds really easy I guess you could say..? Maybe my experience really did pay off at the very least lol but anyways, hopefully the rest of today is productive, no, it will be for sure, but I'll be uploading my hardwork later tonight hopefully, hope you have a really really good day :)... (UPDATE) I ran for 30 minutes, didn't know the trail yet so I didn't bother counting the mile but it's been 3 years and I didn't even vomit at the end of it, this challenge might actually be a.. anything is possible! moment, although the thought of you really gave me that extra boost I needed to keep going, I really do love you so much.",
           "", "", "", "",
           "", "", "", "", "",
           "", "", "", "", "",
@@ -291,13 +320,23 @@
 
         // Overlays
         function openOverlay(day) {
+          // Show chosen overlay
           document.getElementById("overlay" + day).style.display = "block";
+          // Show backdrop
           document.getElementById("backdrop").style.display = "block";
+          // Prevent body scroll behind overlay
+          document.documentElement.classList.add('no-scroll');
+          document.body.classList.add('no-scroll');
         }
 
         function closeOverlay() {
+          // Hide all overlays
           document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+          // Hide backdrop
           document.getElementById("backdrop").style.display = "none";
+          // Restore body scroll
+          document.documentElement.classList.remove('no-scroll');
+          document.body.classList.remove('no-scroll');
         }
 
         // Toggle mini-calendar
