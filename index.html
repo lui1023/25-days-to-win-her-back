@@ -68,12 +68,41 @@
       box-shadow: 0.5rem 1rem 3rem hsl(0, 0%, 0%, 0.3);
     }
 
+    /* CALENDAR ICON + MESSAGE */
     .calendar-toggle-btn {
       position: absolute;
       top: 10px;
       left: 5%;
       cursor: pointer;
       width: 60px;
+      z-index: 2;
+      border: 3px solid transparent;
+      /* 1) We define an animation that cycles border colors (rainbow effect) */
+      animation: rainbow-border 6s linear infinite;
+      border-radius: 8px; /* Slight rounding for LED-ish style (optional) */
+    }
+
+    /* 2) Keyframes for the rainbow effect */
+    @keyframes rainbow-border {
+      0%   { border-color: red;     }
+      16%  { border-color: orange;  }
+      33%  { border-color: yellow;  }
+      50%  { border-color: lime;    }
+      66%  { border-color: blue;    }
+      83%  { border-color: indigo;  }
+      100% { border-color: violet;  }
+    }
+
+    .calendar-callout {
+      position: absolute;
+      top: 10%;
+      left: 5.3%;
+      color: rgb(250, 138, 235);
+      font-size: 16px;
+      pointer-events: none;
+      user-select: none;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
     }
 
     .mini-calendar {
@@ -87,6 +116,7 @@
       padding: 25px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       display: none;
+      z-index: 9999; /* So it's on top of the cat image on mobile */
     }
 
     .mini-calendar::before {
@@ -191,39 +221,33 @@
     }
   </style>
 </head>
-
-<script>
-  fetch("https://01jrvypshttryp1dqhnzht7k8g.hooks.webhookrelay.com", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: "👋 Someone just visited your site!"
-    })
-  });
-  </script>
-  
 <body>
   <div class="container">
     <div class="container">
+      <!-- CALENDAR ICON -->
       <img class="calendar-toggle-btn" src="calendar.png" alt="Toggle Calendar" onclick="toggleCalendar()" />
-      <div class="mini-calendar">
-        <!-- ✕ Button to close calendar -->
-        <button class="calendar-close" onclick="toggleCalendar()">✕</button>
+      <!-- RED ARROW / TEXT CALL-OUT -->
+      <div class="calendar-callout">
+        ↑ Daily Updates! &nbsp;
+      </div>
 
+      <!-- MINI CALENDAR -->
+      <div class="mini-calendar">
+        <!-- X Button to close calendar -->
+        <button class="calendar-close" onclick="toggleCalendar()">✕</button>
         <h4>📅 Progress Tracker</h4>
         <div class="calendar-mini" id="calendarMini"></div>
       </div>
 
+      <!-- BACKDROP FOR OVERLAYS -->
       <div class="backdrop" id="backdrop" onclick="closeOverlay()"></div>
 
       <script>
         // MESSAGES (unchanged)
         const dayMessages = [
           "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
-          "Tuesdays... I had a run planned at 6 and I will try to make it..? I did have wingstop which I know is unhealthy but I'll cancel it out with the run hopefully, I stayed up till 6 in the morning finishing so much homework I'm so relieved, now it's just one class that's left till I'm caught up, we had our final presentation for one of the classes so that's nice, I started looking at jobs within my field, and it all sounds really easy I guess you could say..? Maybe my experience really did pay off at the very least lol but anyways, hopefully the rest of today is productive, no, it will be for sure, but I'll be uploading my hardwork later tonight hopefully, hope you have a really really good day :)",
-           "", "", "", "",
+          "Tuesdays... I had a run planned at 6 and I will try to make it..? I did have wingstop which I know is unhealthy but I'll cancel it out with the run hopefully, I stayed up till 6 in the morning finishing so much homework I'm so relieved, now it's just one class that's left till I'm caught up, we had our final presentation for one of the classes so that's nice, I started looking at jobs within my field, and it all sounds really easy I guess you could say..? Maybe my experience really did pay off at the very least lol but anyways, hopefully the rest of today is productive, no, it will be for sure, but I'll be uploading my hardwork later tonight hopefully, hope you have a really really good day :)... (UPDATE) I ran for 30 minutes, didn't know the trail yet so I didn't bother counting the mile but it's been 3 years and I didn't even vomit at the end of it, this challenge might actually be a.. anything is possible! moment, although the thought of you really gave me that extra boost I needed to keep going, I really do love you so much.", 
+          "", "", "", "",
           "", "", "", "", "",
           "", "", "", "", "",
           "", "", "", "", "",
@@ -245,14 +269,9 @@
         }
 
         // EXACT 24-HOUR LOGIC
-        // Start at 2025-04-14 00:00:00
         const miniStartDate = new Date("2025-04-14T00:00:00");
-        // Current local time
         const now = new Date();
-
-        // Full elapsed time in ms, not just date difference
         const elapsedMs = now - miniStartDate;
-        // Divide by # of ms in 24 hours and add 1 => dayUnlocked
         const dayUnlocked = Math.floor(elapsedMs / (1000 * 60 * 60 * 24)) + 1;
 
         const miniCalendar = document.getElementById("calendarMini");
@@ -292,6 +311,7 @@
         }
       </script>
 
+      <!-- TENOR GIF -->
       <div class="tenor-gif-embed" data-postid="19922309" data-share-method="host" data-aspect-ratio="1.04918" data-width="100%">
         <a href="https://tenor.com/view/cat-snow-bengal-cat-laura-vilser-tiktok-gif-19922309">:v</a> from
         <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
