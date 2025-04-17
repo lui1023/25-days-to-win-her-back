@@ -350,10 +350,10 @@
     renderWords();
 
     window.onload = () => {
-  const puzzle = document.getElementById("puzzle");
+      const puzzle = document.getElementById("puzzle");
 
-  // Only prevent scrolling if the touch starts within the puzzle grid
-  puzzle.addEventListener("touchstart", () => {
+      // Only prevent scrolling if touch starts in puzzle
+      puzzle.addEventListener("touchstart", () => {
         puzzle.dataset.touching = "true";
       });
 
@@ -361,12 +361,14 @@
         puzzle.dataset.touching = "false";
       });
 
-      document.addEventListener("touchmove", (e) => {
+      // This will now only trigger when swiping *inside* the puzzle
+      puzzle.addEventListener("touchmove", (e) => {
         if (puzzle.dataset.touching === "true") {
           e.preventDefault();
         }
       }, { passive: false });
     };
+
   </script>
 </body>
 </html>
