@@ -11,6 +11,12 @@
       padding: 20px;
       text-align: center;
     }
+    html, body {
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
     h1 { color: #ad1457; }
     #puzzle { display: inline-block; margin: 20px auto; user-select: none; touch-action: pan-x pan-y; }
     .row { display: flex; }
@@ -55,24 +61,23 @@
       cursor: pointer;
     }
     @media (max-width: 600px) {
-    .cell {
-      width: 22px;
-      height: 22px;
-      font-size: 12px;
-      line-height: 22px;
+      .cell {
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        line-height: 22px;
+      }
+      #wordList {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 220px;
+      }
     }
-    #wordList {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 220px;
-    }
-}
-
   </style>
 </head>
 <body>
   <h1>Michelle's Word Search 🤍</h1>
   <p>Tap and drag across the words to find them... oh and it’ll save your progress bby 🤍</p>
-  <P> Words are vertical and horizontal, reversed too but never diagonal heh</P>
+  <p>Words are vertical and horizontal, reversed too but never diagonal heh</p>
   <div id="puzzle"></div>
   <ul id="wordList"></ul>
   <button onclick="resetGrid()">Reset Grid (Shuffle)</button>
@@ -162,7 +167,6 @@
       words = placed;
       localStorage.setItem("previousWords", JSON.stringify(placed));
 
-      // fill grid with random letters
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       for (let r = 0; r < gridSize; r++) {
         for (let c = 0; c < gridSize; c++) {
@@ -285,6 +289,50 @@
       isMouseDown = false;
     });
 
+    // Mobile touch interaction support
+    document.addEventListener("touchstart", (e) => {
+      const cell = e.target;
+      if (cell.classList.contains("cell")) {
+        isMouseDown = true;
+        selected = [cell];
+        cell.classList.add("selected");
+      }
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      const el = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (isMouseDown && el && el.classList.contains("cell") && !selected.includes(el)) {
+        selected.push(el);
+        el.classList.add("selected");
+      }
+      e.preventDefault(); // prevent screen scrolling
+    }, { passive: false });
+
+    document.addEventListener("touchend", () => {
+      if (!selected.length) return;
+      const guess = selected.map(el => el.textContent).join("");
+      const reverse = guess.split("").reverse().join("");
+      const upperWords = words.map(w => w.toUpperCase());
+
+      if (upperWords.includes(guess) || upperWords.includes(reverse)) {
+        selected.forEach(el => {
+          el.classList.remove("selected");
+          el.classList.add("found");
+          foundCoords.add(`${el.dataset.row}-${el.dataset.col}`);
+        });
+        foundWordList.add(guess);
+        foundWordList.add(reverse);
+        saveProgress();
+        renderWords();
+      } else {
+        selected.forEach(el => el.classList.remove("selected"));
+      }
+      selected = [];
+      isMouseDown = false;
+    });
+
+    // Load from saved data or generate new
     const savedGrid = localStorage.getItem("savedGrid");
     const savedWords = localStorage.getItem("placedWords");
     const savedCoords = localStorage.getItem("wordCoords");
@@ -301,13 +349,11 @@
     renderGrid();
     renderWords();
 
-    window.onload = function () {
-    document.getElementById("puzzle").addEventListener("touchmove", function (e) {
-      e.preventDefault();
-        }, { passive: false });
+    window.onload = () => {
+      document.getElementById("puzzle").addEventListener("touchmove", (e) => {
+        e.preventDefault();
+      }, { passive: false });
     };
-
-
   </script>
 </body>
 </html>
