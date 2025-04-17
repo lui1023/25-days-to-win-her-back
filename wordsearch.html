@@ -399,33 +399,46 @@ document.addEventListener("touchend", () => {
   }
 });
 
-  </script>\
+  </script>
 
 <div class="falling-peonies" id="peonyContainer"></div>
 <script>
   const peonyContainer = document.getElementById("peonyContainer");
-  let totalSpawned = 0;
-  const maxPeonies = 6; // how many total to spawn
-  const spawnInterval = 15000;
+  const recentPositions = [];
+  const spawnInterval = 10000; // one every 10 seconds
+  let flowerEl = null;
 
-  const spawnPeony = () => {
-    if (totalSpawned >= maxPeonies) return;
-    
-    const flower = document.createElement("div");
-    flower.classList.add("peony");
-    const offset = Math.random();
-    const jitter = (Math.sin(Date.now() * offset) + 1) / 2; // adds pseudo-entropy
-    flower.style.left = (10 + jitter * 80).toFixed(2) + "vw";
+  function getUniqueLeft() {
+    let newLeft;
+    let attempts = 0;
+    do {
+      const offset = Math.random();
+      const jitter = (Math.sin(Date.now() * offset + Math.random() * 1000) + 1) / 2;
+      newLeft = (10 + jitter * 80).toFixed(2);
+      attempts++;
+    } while (recentPositions.includes(newLeft) && attempts < 10);
 
-    flower.style.animationDuration = 15 + Math.random() * 1 + "s";
-    flower.style.animationDelay = "0s";
-    peonyContainer.appendChild(flower);
+    recentPositions.push(newLeft);
+    if (recentPositions.length > 5) recentPositions.shift();
 
-    totalSpawned++;
-    setTimeout(spawnPeony, spawnInterval);
-  };
+    return newLeft;
+  }
 
-  spawnPeony(); // Start the spawning loop
+  function spawnSinglePeony() {
+    if (flowerEl && flowerEl.parentElement) {
+      peonyContainer.removeChild(flowerEl);
+    }
+
+    flowerEl = document.createElement("div");
+    flowerEl.classList.add("peony");
+    flowerEl.style.left = getUniqueLeft() + "vw";
+    flowerEl.style.animationDuration = "10s"; // match spawnInterval
+    flowerEl.style.animationDelay = "0s";
+    peonyContainer.appendChild(flowerEl);
+  }
+
+  spawnSinglePeony();
+  setInterval(spawnSinglePeony, spawnInterval);
 </script>
 
 </body>
