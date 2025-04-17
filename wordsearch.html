@@ -350,8 +350,21 @@
     renderWords();
 
     window.onload = () => {
-      document.getElementById("puzzle").addEventListener("touchmove", (e) => {
-        e.preventDefault();
+  const puzzle = document.getElementById("puzzle");
+
+  // Only prevent scrolling if the touch starts within the puzzle grid
+  puzzle.addEventListener("touchstart", () => {
+        puzzle.dataset.touching = "true";
+      });
+
+      puzzle.addEventListener("touchend", () => {
+        puzzle.dataset.touching = "false";
+      });
+
+      document.addEventListener("touchmove", (e) => {
+        if (puzzle.dataset.touching === "true") {
+          e.preventDefault();
+        }
       }, { passive: false });
     };
   </script>
