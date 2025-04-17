@@ -342,14 +342,21 @@ document.addEventListener("touchstart", (e) => {
 
 document.addEventListener("touchmove", (e) => {
   if (!isTouchDragging) return;
+
   const touch = e.touches[0];
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  
   if (el && el.classList.contains("cell") && !selected.includes(el)) {
     selected.push(el);
     el.classList.add("selected");
-    e.preventDefault(); // ✅ only blocks scrolling during puzzle drag
+  }
+
+  // Only prevent default if touching a puzzle cell (to allow natural scroll otherwise)
+  if (el && el.classList.contains("cell")) {
+    e.preventDefault();
   }
 }, { passive: false });
+
 
 document.addEventListener("touchend", () => {
   if (isTouchDragging) {
