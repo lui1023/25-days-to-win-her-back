@@ -11,15 +11,17 @@
       padding: 20px;
       text-align: center;
     }
-    html, body {
-      touch-action: manipulation;
-      -webkit-user-select: none;
+
+    h1 { color: #ad1457; }
+
+    #puzzle {
+      display: inline-block;
+      margin: 20px auto;
       user-select: none;
     }
 
-    h1 { color: #ad1457; }
-    #puzzle { display: inline-block; margin: 20px auto; user-select: none; touch-action: pan-x pan-y; }
     .row { display: flex; }
+
     .cell {
       width: 30px;
       height: 30px;
@@ -29,8 +31,10 @@
       text-transform: uppercase;
       cursor: pointer;
     }
+
     .found { background-color: #c8e6c9; color: #2e7d32; }
     .selected { background-color: #ffe082; }
+
     #wordList {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -41,16 +45,19 @@
       list-style: none;
       justify-content: center;
     }
+
     #wordList li {
       background: #f8bbd0;
       padding: 8px 12px;
       border-radius: 5px;
       text-align: center;
     }
+
     #wordList .foundWord {
       background: #c8e6c9;
       text-decoration: line-through;
     }
+
     button {
       margin: 10px 8px;
       padding: 8px 20px;
@@ -60,6 +67,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     @media (max-width: 600px) {
       .cell {
         width: 22px;
@@ -67,6 +75,7 @@
         font-size: 12px;
         line-height: 22px;
       }
+
       #wordList {
         grid-template-columns: repeat(2, 1fr);
         max-width: 220px;
@@ -84,26 +93,11 @@
   <button onclick="revealAll()">Reveal All</button>
 
   <script>
-    const allWords = [
-      "Slytherin", "Draco", "Wand", "Hogwarts", "House", "Snake", "Green",
-      "Benito", "Latin", "YHLQMDLG", "Reggaeton", "Beach", "Sunset", "Waves",
-      "Sand", "Ocean", "Chocolate", "Strawberry", "Peonies", "Pink",
-      "Romance", "Cat", "Whiskers", "Paws", "Meow", "Love", "Listing",
-      "Realtor", "Commission", "Mortgage", "Appraisal", "Contract",
-      "Buyer", "Seller", "Gryffindor", "Hufflepuff", "Ravenclaw", "Broomstick",
-      "Magic", "Soulmate", "Island", "Kitten", "Perreo", "Amor", "TeAmoMichelle", "Rayados"
-    ];
-
+    const allWords = [ "Slytherin", "Draco", "Wand", "Hogwarts", "House", "Snake", "Green", "Benito", "Latin", "YHLQMDLG", "Reggaeton", "Beach", "Sunset", "Waves", "Sand", "Ocean", "Chocolate", "Strawberry", "Peonies", "Pink", "Romance", "Cat", "Whiskers", "Paws", "Meow", "Love", "Listing", "Realtor", "Commission", "Mortgage", "Appraisal", "Contract", "Buyer", "Seller", "Gryffindor", "Hufflepuff", "Ravenclaw", "Broomstick", "Magic", "Soulmate", "Island", "Kitten", "Perreo", "Amor", "TeAmoMichelle", "Rayados" ];
     const gridSize = 14;
     const maxWords = 10;
-    const directions = [
-      { x: 1, y: 0 }, { x: -1, y: 0 },
-      { x: 0, y: 1 }, { x: 0, y: -1 }
-    ];
-
-    let grid = [];
-    let words = [];
-    let wordCoords = {};
+    const directions = [ { x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 } ];
+    let grid = [], words = [], wordCoords = {};
     let foundCoords = new Set(JSON.parse(localStorage.getItem("foundCoords") || "[]"));
     let foundWordList = new Set(JSON.parse(localStorage.getItem("foundWords") || "[]"));
 
@@ -267,29 +261,9 @@
     });
 
     document.addEventListener("mouseup", () => {
-      if (!selected.length) return;
-      const guess = selected.map(el => el.textContent).join("");
-      const reverse = guess.split("").reverse().join("");
-      const upperWords = words.map(w => w.toUpperCase());
-
-      if (upperWords.includes(guess) || upperWords.includes(reverse)) {
-        selected.forEach(el => {
-          el.classList.remove("selected");
-          el.classList.add("found");
-          foundCoords.add(`${el.dataset.row}-${el.dataset.col}`);
-        });
-        foundWordList.add(guess);
-        foundWordList.add(reverse);
-        saveProgress();
-        renderWords();
-      } else {
-        selected.forEach(el => el.classList.remove("selected"));
-      }
-      selected = [];
-      isMouseDown = false;
+      checkSelection();
     });
 
-    // Mobile touch interaction support
     document.addEventListener("touchstart", (e) => {
       const cell = e.target;
       if (cell.classList.contains("cell")) {
@@ -306,10 +280,13 @@
         selected.push(el);
         el.classList.add("selected");
       }
-      e.preventDefault(); // prevent screen scrolling
-    }, { passive: false });
+    });
 
     document.addEventListener("touchend", () => {
+      checkSelection();
+    });
+
+    function checkSelection() {
       if (!selected.length) return;
       const guess = selected.map(el => el.textContent).join("");
       const reverse = guess.split("").reverse().join("");
@@ -330,9 +307,8 @@
       }
       selected = [];
       isMouseDown = false;
-    });
+    }
 
-    // Load from saved data or generate new
     const savedGrid = localStorage.getItem("savedGrid");
     const savedWords = localStorage.getItem("placedWords");
     const savedCoords = localStorage.getItem("wordCoords");
@@ -348,56 +324,6 @@
 
     renderGrid();
     renderWords();
-
-    window.onload = () => {
-  const puzzle = document.getElementById("puzzle");
-
-  puzzle.addEventListener("touchstart", (e) => {
-    const cell = e.target;
-    if (cell.classList.contains("cell")) {
-      isMouseDown = true;
-      selected = [cell];
-      cell.classList.add("selected");
-      puzzle.dataset.touching = "true";
-    }
-  });
-
-  puzzle.addEventListener("touchmove", (e) => {
-    const touch = e.touches[0];
-    const el = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (puzzle.dataset.touching === "true" && el && el.classList.contains("cell") && !selected.includes(el)) {
-      selected.push(el);
-      el.classList.add("selected");
-      e.preventDefault(); // ✅ This only prevents scrolling inside the puzzle
-    }
-  }, { passive: false });
-
-  puzzle.addEventListener("touchend", () => {
-    puzzle.dataset.touching = "false";
-    if (!selected.length) return;
-    const guess = selected.map(el => el.textContent).join("");
-    const reverse = guess.split("").reverse().join("");
-    const upperWords = words.map(w => w.toUpperCase());
-
-    if (upperWords.includes(guess) || upperWords.includes(reverse)) {
-      selected.forEach(el => {
-        el.classList.remove("selected");
-        el.classList.add("found");
-        foundCoords.add(`${el.dataset.row}-${el.dataset.col}`);
-      });
-      foundWordList.add(guess);
-      foundWordList.add(reverse);
-      saveProgress();
-      renderWords();
-    } else {
-      selected.forEach(el => el.classList.remove("selected"));
-    }
-    selected = [];
-    isMouseDown = false;
-  });
-};
-
-
   </script>
 </body>
 </html>
