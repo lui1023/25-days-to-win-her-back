@@ -99,8 +99,9 @@
         height: 40px;
         background-image: url('pinkrose.png'); 
         background-size: cover;
-        animation: fall linear infinite;
+        animation: fall linear 10s forwards;
         opacity: 0;
+        will-change: transform;
       }
 
       @keyframes fall {
@@ -425,17 +426,16 @@ document.addEventListener("touchend", () => {
   }
 
   function spawnSinglePeony() {
-    if (flowerEl && flowerEl.parentElement) {
-      peonyContainer.removeChild(flowerEl);
-    }
+    // Don't remove the last one, let it finish falling
 
     flowerEl = document.createElement("div");
     flowerEl.classList.add("peony");
     flowerEl.style.left = getUniqueLeft() + "vw";
-    flowerEl.style.animationDuration = "10s"; // match spawnInterval
+    flowerEl.style.animationDuration = "10s";
     flowerEl.style.animationDelay = "0s";
     peonyContainer.appendChild(flowerEl);
   }
+
 
   spawnSinglePeony();
   setInterval(spawnSinglePeony, spawnInterval);
