@@ -19,6 +19,9 @@
       user-select: none;
     }
 
+
+
+
     .row { display: flex; }
 
     .cell {
@@ -323,6 +326,38 @@
 
     renderGrid();
     renderWords();
+
+    // Let users scroll normally unless actively dragging on a word cell
+let isTouchDragging = false;
+
+document.addEventListener("touchstart", (e) => {
+  const target = e.target;
+  if (target.classList.contains("cell")) {
+    isTouchDragging = true;
+    isMouseDown = true;
+    selected = [target];
+    target.classList.add("selected");
+  }
+});
+
+document.addEventListener("touchmove", (e) => {
+  if (!isTouchDragging) return;
+  const touch = e.touches[0];
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  if (el && el.classList.contains("cell") && !selected.includes(el)) {
+    selected.push(el);
+    el.classList.add("selected");
+    e.preventDefault(); // ✅ only blocks scrolling during puzzle drag
+  }
+}, { passive: false });
+
+document.addEventListener("touchend", () => {
+  if (isTouchDragging) {
+    checkSelection();
+    isTouchDragging = false;
+  }
+});
+
   </script>
 </body>
 </html>
