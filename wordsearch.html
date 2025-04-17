@@ -350,24 +350,53 @@
     renderWords();
 
     window.onload = () => {
-      const puzzle = document.getElementById("puzzle");
+  const puzzle = document.getElementById("puzzle");
 
-      // Only prevent scrolling if touch starts in puzzle
-      puzzle.addEventListener("touchstart", () => {
-        puzzle.dataset.touching = "true";
+  puzzle.addEventListener("touchstart", (e) => {
+    const cell = e.target;
+    if (cell.classList.contains("cell")) {
+      isMouseDown = true;
+      selected = [cell];
+      cell.classList.add("selected");
+      puzzle.dataset.touching = "true";
+    }
+  });
+
+  puzzle.addEventListener("touchmove", (e) => {
+    const touch = e.touches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (puzzle.dataset.touching === "true" && el && el.classList.contains("cell") && !selected.includes(el)) {
+      selected.push(el);
+      el.classList.add("selected");
+      e.preventDefault(); // ✅ This only prevents scrolling inside the puzzle
+    }
+  }, { passive: false });
+
+  puzzle.addEventListener("touchend", () => {
+    puzzle.dataset.touching = "false";
+    if (!selected.length) return;
+    const guess = selected.map(el => el.textContent).join("");
+    const reverse = guess.split("").reverse().join("");
+    const upperWords = words.map(w => w.toUpperCase());
+
+    if (upperWords.includes(guess) || upperWords.includes(reverse)) {
+      selected.forEach(el => {
+        el.classList.remove("selected");
+        el.classList.add("found");
+        foundCoords.add(`${el.dataset.row}-${el.dataset.col}`);
       });
+      foundWordList.add(guess);
+      foundWordList.add(reverse);
+      saveProgress();
+      renderWords();
+    } else {
+      selected.forEach(el => el.classList.remove("selected"));
+    }
+    selected = [];
+    isMouseDown = false;
+  });
+};
 
-      puzzle.addEventListener("touchend", () => {
-        puzzle.dataset.touching = "false";
-      });
-
-      // This will now only trigger when swiping *inside* the puzzle
-      puzzle.addEventListener("touchmove", (e) => {
-        if (puzzle.dataset.touching === "true") {
-          e.preventDefault();
-        }
-      }, { passive: false });
-    };
 
   </script>
 </body>
