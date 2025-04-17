@@ -53,6 +53,19 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    @media (max-width: 600px) {
+    .cell {
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      line-height: 22px;
+    }
+    #wordList {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 220px;
+    }
+}
+
   </style>
 </head>
 <body>
