@@ -12,7 +12,7 @@
       text-align: center;
     }
     h1 { color: #ad1457; }
-    #puzzle { display: inline-block; margin: 20px auto; user-select: none; touch-action: none; }
+    #puzzle { display: inline-block; margin: 20px auto; user-select: none; touch-action: pan-x pan-y; }
     .row { display: flex; }
     .cell {
       width: 30px;
@@ -300,6 +300,14 @@
 
     renderGrid();
     renderWords();
+
+    window.onload = function () {
+    document.getElementById("puzzle").addEventListener("touchmove", function (e) {
+      e.preventDefault();
+        }, { passive: false });
+    };
+
+
   </script>
 </body>
 </html>
