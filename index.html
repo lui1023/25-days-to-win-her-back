@@ -245,6 +245,26 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 99;
     }
+    .wordsearch-btn {
+      position: absolute;
+      top: 10px;
+      right: 0.5%;
+      background-color: white;
+      border: 3px solid pink;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #c2185b;
+      z-index: 2;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .wordsearch-btn:hover {
+      background-color: #ffe4f2;
+    }
+
   </style>
 </head>
 
@@ -255,7 +275,7 @@
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      content: "👋 Someone just visited your site!"
+      content: "Alert"
     })
   });
   </script>
@@ -289,7 +309,8 @@
         const dayMessages = [
           "On this day I had to relearn html so that I could make this project, a small step towards productivity and honestly it made me kind of glad that I get to do what I do best but for a good cause rather than a bad one :)",
           "Tuesdays... I had a run planned at 6 and I will try to make it..? I did have wingstop which I know is unhealthy but I'll cancel it out with the run hopefully, I stayed up till 6 in the morning finishing so much homework I'm so relieved, now it's just one class that's left till I'm caught up, we had our final presentation for one of the classes so that's nice, I started looking at jobs within my field, and it all sounds really easy I guess you could say..? Maybe my experience really did pay off at the very least lol but anyways, hopefully the rest of today is productive, no, it will be for sure, but I'll be uploading my hardwork later tonight hopefully, hope you have a really really good day :)... (UPDATE) I ran for 30 minutes, didn't know the trail yet so I didn't bother counting the mile but it's been 3 years and I didn't even vomit at the end of it, this challenge might actually be a.. anything is possible! moment, although the thought of you really gave me that extra boost I needed to keep going, I really do love you so much.",
-          "Really early post today, will update again later but I hope you enjoy the pictures I left for you as much as I enjoyed making them :).. I'm posting later than usual but today has been kind of a tougher day than the past two, I went to class and the presentation was super short so I went to the gym to do arms after with my friend but then I went home to clean the apartment and help pack. Everyone's going home for the holidays so I'll take this chance to finish my game, no distractions. I really want to get started on this other one but my progress on this bucket list is taking some time :v.. I do however need to finish my homework first then we'll instantly begin on working towards the game, matter of fact lets go try some black coffee just to get out of my comfort zone, I gave up on the monster drinks because it's time we start thinking about my future rather than just the present me. I'm sorry to myself for not being able to stay completely happy the whole day but yk it be like that sometimes, I want to go on a run but my legs are so sore anyways that's enough for today, I try my best to show love everyday but today I'll be starting on it so maybe a picture but no full project for you just yet sorry, I hope you had a good day today and as always, te amo tantisimo, adios! :) ", "", "", "",
+          "Really early post today, will update again later but I hope you enjoy the pictures I left for you as much as I enjoyed making them :).. I'm posting later than usual but today has been kind of a tougher day than the past two, I went to class and the presentation was super short so I went to the gym to do arms after with my friend but then I went home to clean the apartment and help pack. Everyone's going home for the holidays so I'll take this chance to finish my game, no distractions. I really want to get started on this other one but my progress on this bucket list is taking some time :v.. I do however need to finish my homework first then we'll instantly begin on working towards the game, matter of fact lets go try some black coffee just to get out of my comfort zone, I gave up on the monster drinks because it's time we start thinking about my future rather than just the present me. I'm sorry to myself for not being able to stay completely happy the whole day but yk it be like that sometimes, I want to go on a run but my legs are so sore anyways that's enough for today, I try my best to show love everyday but today I'll be starting on it so maybe a picture but no full project for you just yet sorry, I hope you had a good day today and as always, te amo tantisimo, adios! :) ", 
+          "I'm not sure if you even check these or if you ever even got my link but either way I'm still happy to make these for you, anyways good morning beautiful if you see this early, if not good afternoon, I took a while to release this but it kept giving me issues I almost gave up but here we are, hope you have a good day, update later in the day, goodnight :)", "", "",
           "", "", "", "", "",
           "", "", "", "", "",
           "", "", "", "", "",
@@ -302,7 +323,7 @@
           document.body.insertAdjacentHTML('beforeend', `
             <div class="overlay" id="overlay${i}">
               <div class="content">
-                <img src="cutecat4.jpg" alt="Day ${i} image">
+                <img src="cutecat5.jpg" alt="Day ${i} image">
                 <p>Day ${i}: ${message}</p>
                 <button class="close-btn" onclick="closeOverlay()">Close</button>
               </div>
@@ -369,6 +390,9 @@
         <a href="https://tenor.com/search/snow-bengal-cat-gifs">:v</a>
       </div>
       <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+      <!-- Word Search Button -->
+      <a href="wordsearch.html" class="wordsearch-btn">M's Word Search 🤍</a>
+
 
       <h1>I'm Sorry.</h1>
       <div class="main-text">
