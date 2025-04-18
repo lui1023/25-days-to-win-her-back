@@ -145,20 +145,37 @@
 
     /* ↓↓↓ Make single-image overlay smaller so user sees entire image & caption without huge scale ↓↓↓ */
     /* Specifically target the photo overlay for smaller size */
+    /* Overlay container */
     #photoOverlay .overlay-content {
-      max-width: 70%;  /* narrower than the default 90% */
-      max-height: 80%; /* keep some space so caption is visible without scrolling */
+      max-width: 90vw;
+      max-height: 90vh;
+      padding: 20px;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    /* Image that fully fits and never overflows */
     #photoOverlay .fullsize-img {
-  max-width: 90vw;
-  max-height: 70vh;
-  width: auto;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-  margin: 0 auto 10px;
-  object-fit: contain;
-}
+      width: auto;
+      max-width: 100%;
+      max-height: 60vh;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+
+    /* Caption always visible, scrolls if needed */
+    #photoOverlay .fullsize-caption {
+      font-size: 1rem;
+      color: #333;
+      max-width: 100%;
+      text-align: center;
+    }
+
 
   </style>
 </head>
