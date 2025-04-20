@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍕 Food Wheel Spinner 🌮</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffe6f0;
+      text-align: center;
+      padding: 40px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #c2185b;
+    }
+
+    #wheelCanvas {
+      margin-top: 30px;
+    }
+
+    #spinButton {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #4a148c;
+    }
+
+    #arrow {
+      position: absolute;
+      top: 110px;
+      left: -200px;
+      width: 240px;
+      height: 240px;
+      transform: rotate(360deg);
+      z-index: 10;
+    }
+
+    .wheel-container {
+      position: relative;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍕 Food Wheel Spinner 🌮</h1>
+
+  <div class="wheel-container">
+    <img src="hogwarts.png" id="arrow" alt="Arrow" />
+    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <button id="spinButton">Spin!</button>
+  <div id="result"></div>
+
+  <script>
+    const canvas = document.getElementById("wheelCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const categories = ["Ramen", "Sushi", "Sandwiches", "Wings", "BBQ", "Salad", "Pizza", "Tacos", "Burgers", "Pasta"];
+    const colors = ["#03a9f4", "#3f51b5", "#9c27b0", "#e91e63", "#009688", "#cddc39", "#ff5722", "#ffc107", "#ff9800", "#4caf50"];
+
+    let currentRotation = 0;
+
+    function drawWheel() {
+      const radius = canvas.width / 2;
+      const anglePerSegment = 2 * Math.PI / categories.length;
+
+      for (let i = 0; i < categories.length; i++) {
+        const startAngle = i * anglePerSegment;
+        const endAngle = startAngle + anglePerSegment;
+        const midAngle = startAngle + anglePerSegment / 2;
+
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius, startAngle, endAngle);
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(midAngle);
+        ctx.textAlign = "center";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillStyle = "#000";
+
+        // Flip if text is in bottom half (90°–270°)
+        const deg = (midAngle * 180) / Math.PI;
+        const normalized = (deg + 360) % 360;
+
+        if (normalized >= 90 && normalized <= 270) {
+          ctx.rotate(Math.PI);
+          ctx.fillText(categories[i], -(radius - 40), 6);
+        } else {
+          ctx.fillText(categories[i], radius - 40, 6);
+        }
+
+        ctx.restore();
+      }
+    }
+
+    drawWheel();
+
+    document.getElementById("spinButton").addEventListener("click", () => {
+      const extraSpins = 10;
+      const randomAngle = Math.random() * 360;
+      const totalRotation = 360 * extraSpins + randomAngle;
+      const wheel = document.getElementById("wheelCanvas");
+
+      currentRotation += totalRotation;
+      wheel.style.transition = "transform 5s ease-out";
+      wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+      const segmentAngle = 360 / categories.length;
+      const finalRotation = currentRotation % 360;
+      const adjustedAngle = (360 - finalRotation + 180) % 360; // left arrow
+      const pickedIndex = Math.floor(adjustedAngle / segmentAngle);
+      const pickedCategory = categories[pickedIndex];
+
+      setTimeout(() => {
+        document.getElementById("result").textContent = "You got: " + pickedCategory + " 🎉";
+      }, 5200);
+    });
+  </script>
+</body>
+</html>
